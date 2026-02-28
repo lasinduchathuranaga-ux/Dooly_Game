@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dolly's Special Card 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    min-height: 100%;
+    background: linear-gradient(160deg, #a8d8ea 0%, #c8b8f0 45%, #f9b4c4 100%);
+    font-family: 'Nunito', sans-serif;
+    /* Allow scrolling */
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Floating hearts - fixed so they don't affect scroll */
+  .hearts-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .heart-float {
+    position: absolute;
+    animation: floatUp linear infinite;
+    opacity: 0.45;
+    will-change: transform;
+  }
+  @keyframes floatUp {
+    0%  { transform: translateY(105vh) rotate(0deg);  opacity: 0.5; }
+    100%{ transform: translateY(-15vh) rotate(25deg); opacity: 0;   }
+  }
+
+  /* Page wrapper - scrollable */
+  .page {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 12px 40px;
+    gap: 0;
+  }
+
+  /* Card */
+  .card {
+    background: linear-gradient(160deg, #fff5fb 0%, #eaf4ff 55%, #f6eeff 100%);
+    border-radius: 32px;
+    padding: 32px 24px 28px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(160,80,140,0.22),
+                0 0 0 3px #f9b4c4,
+                0 0 0 6px #b8b3e9;
+    text-align: center;
+    animation: cardPop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+    position: relative;
+    overflow: visible;
+  }
+  @keyframes cardPop {
+    from { transform: scale(0.6) rotate(-4deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+  }
+
+  /* Sparkles on corners of card */
+  .sparkle { position: absolute; font-size: 20px; animation: sparklePop 2.2s ease-in-out infinite; pointer-events: none; }
+  .sparkle:nth-child(1){top:-10px;left:-4px;animation-delay:0s;}
+  .sparkle:nth-child(2){top:-10px;right:-4px;animation-delay:0.7s;}
+  .sparkle:nth-child(3){bottom:-8px;left:6px;animation-delay:1.3s;}
+  .sparkle:nth-child(4){bottom:-8px;right:6px;animation-delay:1.9s;}
+  @keyframes sparklePop {
+    0%,100%{transform:scale(0.7) rotate(0deg);opacity:0.5}
+    50%{transform:scale(1.4) rotate(22deg);opacity:1}
+  }
+
+  /* Title */
+  .top-tag {
+    display: inline-block; background: linear-gradient(90deg,#4a90d9,#c47bc0);
+    color:#fff; font-family:'Pacifico',cursive; font-size:0.65rem;
+    padding:3px 14px; border-radius:20px; margin-bottom:10px;
+  }
+  .title {
+    font-family: 'Pacifico', cursive; font-size: 1.9rem;
+    background: linear-gradient(90deg,#4a90d9,#c47bc0,#f06292,#4a90d9);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; background-size: 200%;
+    animation: shimmer 3s linear infinite; margin-bottom: 4px;
+  }
+  @keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+  .subtitle { font-size:0.82rem; color:#a060c0; font-weight:700; margin-bottom:18px; }
+
+  /* Bear scene */
+  .scene {
+    position: relative; height: 220px;
+    display: flex; align-items: flex-end; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .floor {
+    position:absolute; bottom:0; left:10%; right:10%; height:16px;
+    background: linear-gradient(90deg,#f9b4c4,#b8b3e9,#a8d8ea);
+    border-radius:50%; filter:blur(5px); opacity:0.45;
+  }
+  .teddy {
+    position:relative; cursor:pointer; transform-origin:bottom center;
+    animation: teddyBounce 2s ease-in-out infinite;
+    user-select:none;
+  }
+  @keyframes teddyBounce {
+    0%,100%{transform:translateY(0) rotate(-2deg);}
+    50%{transform:translateY(-10px) rotate(2deg);}
+  }
+  .teddy.celebrate { animation: teddySpin 0.6s ease-in-out 3; }
+  @keyframes teddySpin {
+    0%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}100%{transform:rotate(0)}
+  }
+  .bear-svg { width:148px; height:190px; display:block; }
+
+  /* Dress label */
+  .dress-label {
+    font-size:0.82rem; color:#8860b0; font-weight:700;
+    min-height:22px; margin-bottom:8px; transition:opacity 0.3s;
+  }
+
+  /* Win message */
+  .win-box {
+    display:none; background:linear-gradient(135deg,#ffecf5,#f0e8ff);
+    border:2px solid #f06292; border-radius:18px; padding:14px 16px;
+    margin-bottom:12px; animation: winPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .win-box.show { display:block; }
+  @keyframes winPop {
+    from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1}
+  }
+  .win-box h3 { font-family:'Pacifico',cursive; color:#e0357a; font-size:1.1rem; margin-bottom:4px; }
+  .win-box p  { font-size:0.85rem; color:#7a50a0; font-weight:700; line-height:1.6; }
+
+  /* Button */
+  .dress-btn {
+    background: linear-gradient(135deg,#b8b3e9,#f9b4c4);
+    border:none; border-radius:50px; padding:12px 30px;
+    font-family:'Nunito',sans-serif; font-size:1rem; font-weight:800;
+    color:white; cursor:pointer;
+    box-shadow:0 4px 18px rgba(180,80,160,0.32);
+    transition:all 0.25s; margin-bottom:18px; width:100%; max-width:260px;
+    -webkit-appearance: none;
+  }
+  .dress-btn:hover{transform:scale(1.05); box-shadow:0 6px 24px rgba(180,80,160,0.45);}
+  .dress-btn:active{transform:scale(0.96);}
+
+  /* Message box */
+  .message {
+    background:linear-gradient(135deg,rgba(168,216,234,0.25),rgba(184,179,233,0.25));
+    border-radius:18px; padding:16px 18px; border:2px dashed #f9b4c4;
+    animation:fadeSlide 1s 0.4s both;
+  }
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .message p { font-size:0.92rem; color:#6a5a8e; line-height:1.75; font-weight:600; }
+  .message p strong { color:#c0456a; font-size:1rem; }
+  .stars {
+    display:flex; justify-content:center; gap:6px; margin-top:10px; font-size:1.1rem;
+    animation:starPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes starPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+  /* Confetti */
+  .confetti-piece {
+    position:fixed; width:10px; height:10px; border-radius:2px;
+    animation: confettiFall linear forwards;
+    pointer-events:none; z-index:999;
+  }
+  @keyframes confettiFall {
+    0%  {transform:translateY(-20px) rotate(0deg); opacity:1;}
+    100%{transform:translateY(110vh) rotate(720deg); opacity:0;}
+  }
+
+  /* Music note floating on press */
+  .note-pop {
+    position:fixed; font-size:22px; pointer-events:none; z-index:998;
+    animation: noteFly 1.2s ease-out forwards;
+  }
+  @keyframes noteFly {
+    0%{transform:translateY(0) scale(1); opacity:1;}
+    100%{transform:translateY(-80px) scale(1.4); opacity:0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating hearts in background -->
+<div class="hearts-bg" id="heartsContainer"></div>
+
+<div class="page">
+  <div class="card">
+    <div class="sparkle">✨</div>
+    <div class="sparkle">💫</div>
+    <div class="sparkle">🌸</div>
+    <div class="sparkle">⭐</div>
+
+    <div id="soundHint" style="background:#fff0fa;border:1.5px dashed #f9b4c4;border-radius:12px;padding:7px 12px;font-size:0.78rem;color:#b05090;font-weight:700;margin-bottom:10px;cursor:pointer;animation:starPulse 1.5s ease-in-out infinite;" onclick="unlockAndHide()">
+      🔊 Tap here first to enable sound! 📱
+    </div>
+    <div class="top-tag">💕 Special Card For You</div>
+    <div class="title">Hi Dolly! 🐻</div>
+    <div class="subtitle">💙 Blue &nbsp;·&nbsp; 💜 Purple &nbsp;·&nbsp; 💗 Pink</div>
+
+    <!-- Bear Scene -->
+    <div class="scene">
+      <div class="floor"></div>
+      <div class="teddy" id="teddy" onclick="changeDress()" title="Tap me!">
+        <svg class="bear-svg" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ears -->
+          <circle cx="42" cy="46" r="21" fill="#c9956a"/>
+          <circle cx="118" cy="46" r="21" fill="#c9956a"/>
+          <circle cx="42" cy="46" r="12" fill="#e8b48a"/>
+          <circle cx="118" cy="46" r="12" fill="#e8b48a"/>
+          <!-- Body -->
+          <ellipse cx="80" cy="140" rx="48" ry="55" fill="#c9956a"/>
+          <!-- DRESS -->
+          <g id="dressGroup">
+            <ellipse cx="80" cy="158" rx="46" ry="40" fill="#4a90d9"/>
+            <ellipse cx="80" cy="150" rx="40" ry="18" fill="#6aaaee"/>
+            <ellipse cx="80" cy="195" rx="46" ry="9" fill="#2c6dbf" opacity="0.7"/>
+            <ellipse cx="80" cy="130" rx="16" ry="7" fill="#f9b4c4"/>
+            <ellipse cx="70" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(-30 70 128)"/>
+            <ellipse cx="90" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(30 90 128)"/>
+            <circle cx="80" cy="130" r="5" fill="#f06292"/>
+          </g>
+          <!-- Head -->
+          <circle cx="80" cy="74" r="42" fill="#c9956a"/>
+          <circle cx="80" cy="82" r="20" fill="#e8b48a"/>
+          <!-- Eyes -->
+          <circle cx="65" cy="65" r="7" fill="#2d1a0e"/>
+          <circle cx="95" cy="65" r="7" fill="#2d1a0e"/>
+          <circle cx="63" cy="63" r="2.5" fill="white"/>
+          <circle cx="93" cy="63" r="2.5" fill="white"/>
+          <!-- Nose -->
+          <ellipse cx="80" cy="80" rx="8" ry="5" fill="#2d1a0e"/>
+          <ellipse cx="80" cy="79" rx="4" ry="2" fill="#ff6b9d"/>
+          <!-- Smile -->
+          <path d="M 68 89 Q 80 101 92 89" stroke="#2d1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Cheeks -->
+          <circle cx="54" cy="79" r="10" fill="#f9b4c4" opacity="0.5"/>
+          <circle cx="106" cy="79" r="10" fill="#f9b4c4" opacity="0.5"/>
+          <!-- Arms -->
+          <ellipse cx="28" cy="128" rx="14" ry="29" fill="#c9956a" transform="rotate(18 28 128)"/>
+          <ellipse cx="132" cy="128" rx="14" ry="29" fill="#c9956a" transform="rotate(-18 132 128)"/>
+          <circle cx="22" cy="150" r="12" fill="#c9956a"/>
+          <circle cx="138" cy="150" r="12" fill="#c9956a"/>
+          <!-- Legs -->
+          <ellipse cx="60" cy="193" rx="15" ry="12" fill="#b8845a"/>
+          <ellipse cx="100" cy="193" rx="15" ry="12" fill="#b8845a"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="dress-label" id="dressLabel">👗 Wearing Blue Dress</div>
+
+    <!-- Win message box (hidden until pink chosen) -->
+    <div class="win-box" id="winBox">
+      <h3>🎉 You Win, Dolly! 🎉</h3>
+      <p>You are wearing the <strong style="color:#e0357a">Pink Dress</strong>! 💗<br>
+      The correct dress! You look absolutely beautiful~<br>
+      You always win my heart! 💕🐻</p>
+    </div>
+
+    <button class="dress-btn" id="mainBtn" onclick="changeDress()">✨ Change Dress!</button>
+
+    <div class="message">
+      <p>Hey <strong>Dolly</strong>! 🐾<br>
+      You are the most precious bear in my world 🌟<br>
+      Tap Dolly bear or the button to try on new dresses!<br>
+      Find the <strong>Pink Dress</strong> to win a surprise! 💗🎀</p>
+      <div class="stars">💙 💜 🌸 💕 ⭐ 💗</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Web Audio sound engine ──────────────────────────────────────────
+let audioCtx = null;
+
+// Create & unlock AudioContext on very first user touch (mobile fix)
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  // Resume if suspended (iOS requirement)
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+// Unlock on first touch anywhere on page
+document.addEventListener('touchstart', () => { initAudio(); }, { once: true });
+document.addEventListener('touchend',   () => { initAudio(); }, { once: true });
+document.addEventListener('click',      () => { initAudio(); }, { once: true });
+
+function playTone(freq, type='sine', dur=0.18, vol=0.3, delay=0) {
+  try {
+    const ctx = initAudio();
+    // Extra safety: resume if suspended
+    const doPlay = () => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = type; o.frequency.value = freq;
+      const t = ctx.currentTime + delay;
+      g.gain.setValueAtTime(vol, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.start(t);
+      o.stop(t + dur + 0.05);
+    };
+    if (ctx.state === 'suspended') {
+      ctx.resume().then(doPlay);
+    } else {
+      doPlay();
+    }
+  } catch(e){}
+}
+
+function playDressChange() {
+  // Playful ascending ding melody
+  const notes = [523, 659, 784, 1047];
+  notes.forEach((f, i) => playTone(f, 'sine', 0.15, 0.28, i*0.09));
+}
+
+function playWinMusic() {
+  // Victory fanfare
+  const melody = [
+    {f:523,d:0.12},{f:659,d:0.12},{f:784,d:0.12},{f:1047,d:0.22},
+    {f:784,d:0.1},{f:1047,d:0.1},{f:1175,d:0.35}
+  ];
+  let t = 0;
+  melody.forEach(n => { playTone(n.f,'sine',n.d,0.32,t); t+=n.d+0.04; });
+  const harmony = [
+    {f:330,d:0.12},{f:415,d:0.12},{f:494,d:0.12},{f:659,d:0.22},
+    {f:494,d:0.1},{f:659,d:0.1},{f:740,d:0.35}
+  ];
+  let t2=0;
+  harmony.forEach(n => { playTone(n.f,'triangle',n.d,0.16,t2); t2+=n.d+0.04; });
+}
+
+function playPinkTune() {
+  // "You found it!" chime
+  playTone(880,'sine',0.18,0.32,0);
+  playTone(1047,'sine',0.18,0.32,0.19);
+  playTone(1319,'sine',0.32,0.38,0.38);
+}
+
+// ── Dresses ──────────────────────────────────────────────────────────
+const dresses = [
+  {
+    id: 'pink',
+    label: '💗 Wearing Pink Dress ← Correct!',
+    note: '💗',
+    html: `<ellipse cx="80" cy="158" rx="46" ry="40" fill="#f9b4c4"/>
+           <ellipse cx="80" cy="150" rx="40" ry="18" fill="#ffd6e8"/>
+           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#e08aaa" opacity="0.7"/>
+           <path d="M34 155 Q50 185 80 192 Q110 185 126 155" fill="#ffd6e8" opacity="0.4"/>
+           <ellipse cx="80" cy="130" rx="16" ry="7" fill="#4a90d9"/>
+           <ellipse cx="70" cy="128" rx="12" ry="8" fill="#4a90d9" transform="rotate(-30 70 128)"/>
+           <ellipse cx="90" cy="128" rx="12" ry="8" fill="#4a90d9" transform="rotate(30 90 128)"/>
+           <circle cx="80" cy="130" r="5" fill="#2c6dbf"/>`
+  },
+  {
+    id: 'purple',
+    label: '💜 Wearing Purple Dress',
+    note: '💜',
+    html: `<ellipse cx="80" cy="158" rx="46" ry="40" fill="#b8b3e9"/>
+           <ellipse cx="80" cy="150" rx="40" ry="18" fill="#d0ccf7"/>
+           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#8a82cc" opacity="0.7"/>
+           <ellipse cx="80" cy="130" rx="16" ry="7" fill="#f9b4c4"/>
+           <ellipse cx="70" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(-30 70 128)"/>
+           <ellipse cx="90" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(30 90 128)"/>
+           <circle cx="80" cy="130" r="5" fill="#c47bc0"/>`
+  },
+  {
+    id: 'rainbow',
+    label: '✨ Rainbow Special Dress',
+    note: '🌈',
+    html: `<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+             <stop offset="0%" stop-color="#4a90d9"/>
+             <stop offset="50%" stop-color="#b8b3e9"/>
+             <stop offset="100%" stop-color="#f9b4c4"/>
+           </linearGradient></defs>
+           <ellipse cx="80" cy="158" rx="46" ry="40" fill="url(#rg)"/>
+           <ellipse cx="80" cy="150" rx="40" ry="18" fill="white" opacity="0.25"/>
+           <text x="56" y="168" font-size="15">⭐💜🌸</text>
+           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#8a82cc" opacity="0.6"/>
+           <ellipse cx="80" cy="130" rx="16" ry="7" fill="gold"/>
+           <ellipse cx="70" cy="128" rx="12" ry="8" fill="gold" transform="rotate(-30 70 128)"/>
+           <ellipse cx="90" cy="128" rx="12" ry="8" fill="gold" transform="rotate(30 90 128)"/>
+           <circle cx="80" cy="130" r="5" fill="#e8a000"/>`
+  },
+  {
+    id: 'blue',
+    label: '💙 Wearing Blue Dress',
+    note: '💙',
+    html: `<ellipse cx="80" cy="158" rx="46" ry="40" fill="#4a90d9"/>
+           <ellipse cx="80" cy="150" rx="40" ry="18" fill="#6aaaee"/>
+           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#2c6dbf" opacity="0.7"/>
+           <ellipse cx="80" cy="130" rx="16" ry="7" fill="#f9b4c4"/>
+           <ellipse cx="70" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(-30 70 128)"/>
+           <ellipse cx="90" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(30 90 128)"/>
+           <circle cx="80" cy="130" r="5" fill="#f06292"/>`
+  }
+];
+
+let cur = 0; // starts on blue (index 3, but we start at blue which is index 3 as default)
+// Actually blue is index 3, let's set initial so next press goes to pink
+let curIdx = 3; // currently showing blue (index 3 in array)
+
+const dressGroup = document.getElementById('dressGroup');
+const dressLabel = document.getElementById('dressLabel');
+const winBox = document.getElementById('winBox');
+const teddy = document.getElementById('teddy');
+
+function changeDress(fromBtn) {
+  curIdx = (curIdx + 1) % dresses.length;
+  const d = dresses[curIdx];
+
+  // Sound
+  if (d.id === 'pink') {
+    playPinkTune();
+    setTimeout(playWinMusic, 600);
+  } else {
+    playDressChange();
+  }
+
+  // Note popup
+  spawnNote(d.note);
+
+  // Change dress visually
+  dressGroup.style.opacity = '0';
+  dressGroup.style.transition = 'opacity 0.2s';
+  setTimeout(() => {
+    dressGroup.innerHTML = d.html;
+    dressLabel.textContent = d.label;
+    dressGroup.style.opacity = '1';
+  }, 200);
+
+  // Win box
+  if (d.id === 'pink') {
+    setTimeout(() => {
+      winBox.classList.add('show');
+      winBox.scrollIntoView({behavior:'smooth', block:'center'});
+      launchConfetti();
+    }, 300);
+    teddy.classList.remove('celebrate');
+    void teddy.offsetWidth;
+    teddy.classList.add('celebrate');
+  } else {
+    winBox.classList.remove('show');
+  }
+
+  // Teddy bounce reset
+  teddy.style.animation = 'none';
+  void teddy.offsetWidth;
+  teddy.style.animation = '';
+}
+
+// ── Confetti ──────────────────────────────────────────────────────────
+const confettiColors = ['#f9b4c4','#b8b3e9','#4a90d9','#ffe66d','#f06292','#a8d8ea'];
+function launchConfetti() {
+  for(let i=0; i<60; i++){
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className='confetti-piece';
+      c.style.left = Math.random()*100+'vw';
+      c.style.top = '-12px';
+      c.style.background = confettiColors[Math.floor(Math.random()*confettiColors.length)];
+      c.style.width = (8+Math.random()*10)+'px';
+      c.style.height = (8+Math.random()*10)+'px';
+      c.style.borderRadius = Math.random()>0.5?'50%':'2px';
+      c.style.animationDuration = (1.8+Math.random()*1.5)+'s';
+      c.style.animationDelay = (Math.random()*0.4)+'s';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 3500);
+    }, i*25);
+  }
+}
+
+// ── Floating music notes on button press ────────────────────────────
+function spawnNote(emoji) {
+  const btn = document.getElementById('mainBtn');
+  const rect = btn.getBoundingClientRect();
+  const n = document.createElement('div');
+  n.className = 'note-pop';
+  n.textContent = emoji + ' 🎵';
+  n.style.left = (rect.left + rect.width/2 - 20)+'px';
+  n.style.top  = (rect.top - 10 + window.scrollY)+'px';
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(), 1300);
+}
+
+// ── Unlock sound hint ─────────────────────────────────────────────────
+function unlockAndHide() {
+  initAudio();
+  // Play a tiny silent tone to fully unlock
+  playTone(440, 'sine', 0.05, 0.01, 0);
+  const hint = document.getElementById('soundHint');
+  if (hint) {
+    hint.textContent = '✅ Sound enabled! Enjoy the music! 🎵';
+    hint.style.background = '#e8ffe8';
+    hint.style.color = '#2a8a2a';
+    hint.style.border = '1.5px dashed #6ac96a';
+    hint.style.animation = 'none';
+    setTimeout(() => { hint.style.display='none'; }, 1800);
+  }
+}
+
+// ── Floating hearts background ────────────────────────────────────────
+const container = document.getElementById('heartsContainer');
+const emojis = ['💙','💜','💗','🌸','✨','💕','⭐','🎀','🫧'];
+for(let i=0;i<22;i++){
+  const h = document.createElement('div');
+  h.className='heart-float';
+  h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  h.style.left = Math.random()*100+'%';
+  h.style.fontSize = (12+Math.random()*18)+'px';
+  h.style.animationDuration = (7+Math.random()*8)+'s';
+  h.style.animationDelay = (Math.random()*9)+'s';
+  container.appendChild(h);
+}
+</script>
+</body>
+</html>
