@@ -2,526 +2,721 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Dolly's Special Card 💕</title>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dolly's Teddy Games 🐻</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-  html, body {
-    min-height: 100%;
-    background: linear-gradient(160deg, #a8d8ea 0%, #c8b8f0 45%, #f9b4c4 100%);
-    font-family: 'Nunito', sans-serif;
-    /* Allow scrolling */
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
+:root {
+  --blue:   #4a90d9;
+  --purple: #b8b3e9;
+  --pink:   #f9b4c4;
+  --yellow: #ffe66d;
+  --green:  #7ed6a0;
+  --dark:   #3a2a5e;
+  --card:   #fff5fb;
+}
 
-  /* Floating hearts - fixed so they don't affect scroll */
-  .hearts-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .heart-float {
-    position: absolute;
-    animation: floatUp linear infinite;
-    opacity: 0.45;
-    will-change: transform;
-  }
-  @keyframes floatUp {
-    0%  { transform: translateY(105vh) rotate(0deg);  opacity: 0.5; }
-    100%{ transform: translateY(-15vh) rotate(25deg); opacity: 0;   }
-  }
+html, body {
+  min-height: 100%;
+  background: linear-gradient(160deg, #a8d8ea 0%, #c8b0f5 50%, #f9b4c4 100%);
+  font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
+  color: var(--dark);
+}
 
-  /* Page wrapper - scrollable */
-  .page {
-    position: relative; z-index: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 12px 40px;
-    gap: 0;
-  }
+/* ─── FLOATING HEARTS ─── */
+.hbg { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.hf  { position:absolute; animation:floatUp linear infinite; opacity:.4; }
+@keyframes floatUp {
+  0%   { transform:translateY(105vh) rotate(0deg);  opacity:.45; }
+  100% { transform:translateY(-15vh) rotate(30deg); opacity:0;   }
+}
 
-  /* Card */
-  .card {
-    background: linear-gradient(160deg, #fff5fb 0%, #eaf4ff 55%, #f6eeff 100%);
-    border-radius: 32px;
-    padding: 32px 24px 28px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 20px 60px rgba(160,80,140,0.22),
-                0 0 0 3px #f9b4c4,
-                0 0 0 6px #b8b3e9;
-    text-align: center;
-    animation: cardPop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
-    position: relative;
-    overflow: visible;
-  }
-  @keyframes cardPop {
-    from { transform: scale(0.6) rotate(-4deg); opacity: 0; }
-    to   { transform: scale(1) rotate(0deg);   opacity: 1; }
-  }
+/* ─── PAGE LAYOUT ─── */
+.page {
+  position:relative; z-index:1;
+  padding: 18px 12px 50px;
+  display:flex; flex-direction:column; align-items:center; gap:22px;
+}
 
-  /* Sparkles on corners of card */
-  .sparkle { position: absolute; font-size: 20px; animation: sparklePop 2.2s ease-in-out infinite; pointer-events: none; }
-  .sparkle:nth-child(1){top:-10px;left:-4px;animation-delay:0s;}
-  .sparkle:nth-child(2){top:-10px;right:-4px;animation-delay:0.7s;}
-  .sparkle:nth-child(3){bottom:-8px;left:6px;animation-delay:1.3s;}
-  .sparkle:nth-child(4){bottom:-8px;right:6px;animation-delay:1.9s;}
-  @keyframes sparklePop {
-    0%,100%{transform:scale(0.7) rotate(0deg);opacity:0.5}
-    50%{transform:scale(1.4) rotate(22deg);opacity:1}
-  }
+/* ─── HEADER ─── */
+.header {
+  text-align:center;
+  animation: popIn .7s cubic-bezier(.34,1.56,.64,1) both;
+}
+.header h1 {
+  font-family:'Pacifico',cursive; font-size:2rem;
+  background:linear-gradient(90deg,#4a90d9,#c47bc0,#f06292,#4a90d9);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; background-size:200%;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+.header p { font-size:.85rem; color:#8050b0; font-weight:700; margin-top:4px; }
 
-  /* Title */
-  .top-tag {
-    display: inline-block; background: linear-gradient(90deg,#4a90d9,#c47bc0);
-    color:#fff; font-family:'Pacifico',cursive; font-size:0.65rem;
-    padding:3px 14px; border-radius:20px; margin-bottom:10px;
-  }
-  .title {
-    font-family: 'Pacifico', cursive; font-size: 1.9rem;
-    background: linear-gradient(90deg,#4a90d9,#c47bc0,#f06292,#4a90d9);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; background-size: 200%;
-    animation: shimmer 3s linear infinite; margin-bottom: 4px;
-  }
-  @keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
-  .subtitle { font-size:0.82rem; color:#a060c0; font-weight:700; margin-bottom:18px; }
+/* ─── SOUND UNLOCK ─── */
+#soundHint {
+  background:#fff0fa; border:2px dashed var(--pink);
+  border-radius:14px; padding:8px 16px;
+  font-size:.82rem; color:#b050a0; font-weight:800;
+  cursor:pointer; text-align:center;
+  animation:pulse 1.5s ease-in-out infinite;
+  width:100%; max-width:380px;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
 
-  /* Bear scene */
-  .scene {
-    position: relative; height: 220px;
-    display: flex; align-items: flex-end; justify-content: center;
-    margin-bottom: 10px;
-  }
-  .floor {
-    position:absolute; bottom:0; left:10%; right:10%; height:16px;
-    background: linear-gradient(90deg,#f9b4c4,#b8b3e9,#a8d8ea);
-    border-radius:50%; filter:blur(5px); opacity:0.45;
-  }
-  .teddy {
-    position:relative; cursor:pointer; transform-origin:bottom center;
-    animation: teddyBounce 2s ease-in-out infinite;
-    user-select:none;
-  }
-  @keyframes teddyBounce {
-    0%,100%{transform:translateY(0) rotate(-2deg);}
-    50%{transform:translateY(-10px) rotate(2deg);}
-  }
-  .teddy.celebrate { animation: teddySpin 0.6s ease-in-out 3; }
-  @keyframes teddySpin {
-    0%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}100%{transform:rotate(0)}
-  }
-  .bear-svg { width:148px; height:190px; display:block; }
+/* ─── SCORE BAR ─── */
+.scorebar {
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+  width:100%; max-width:380px;
+}
+.score-pill {
+  background:white; border-radius:50px; padding:6px 18px;
+  font-weight:800; font-size:.85rem; color:var(--dark);
+  box-shadow:0 3px 12px rgba(160,80,160,.18);
+  display:flex; align-items:center; gap:5px;
+}
 
-  /* Dress label */
-  .dress-label {
-    font-size:0.82rem; color:#8860b0; font-weight:700;
-    min-height:22px; margin-bottom:8px; transition:opacity 0.3s;
-  }
+/* ─── GAME CARD ─── */
+.game-card {
+  background:var(--card);
+  border-radius:28px; padding:22px 18px 24px;
+  width:100%; max-width:380px;
+  box-shadow:0 16px 50px rgba(160,80,140,.2),
+             0 0 0 3px var(--pink), 0 0 0 6px var(--purple);
+  animation: popIn .6s cubic-bezier(.34,1.56,.64,1) both;
+  position:relative; overflow:hidden;
+}
+.game-card:nth-child(2){ animation-delay:.1s; }
+.game-card:nth-child(3){ animation-delay:.2s; }
+@keyframes popIn{
+  from{transform:scale(.6) rotate(-3deg);opacity:0}
+  to  {transform:scale(1)  rotate(0deg);opacity:1}
+}
 
-  /* Win message */
-  .win-box {
-    display:none; background:linear-gradient(135deg,#ffecf5,#f0e8ff);
-    border:2px solid #f06292; border-radius:18px; padding:14px 16px;
-    margin-bottom:12px; animation: winPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .win-box.show { display:block; }
-  @keyframes winPop {
-    from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1}
-  }
-  .win-box h3 { font-family:'Pacifico',cursive; color:#e0357a; font-size:1.1rem; margin-bottom:4px; }
-  .win-box p  { font-size:0.85rem; color:#7a50a0; font-weight:700; line-height:1.6; }
+.game-title {
+  font-family:'Pacifico',cursive; font-size:1.25rem;
+  color:#c0456a; margin-bottom:4px; text-align:center;
+}
+.game-subtitle {
+  font-size:.78rem; color:#8a70a0; font-weight:700;
+  text-align:center; margin-bottom:14px;
+}
 
-  /* Button */
-  .dress-btn {
-    background: linear-gradient(135deg,#b8b3e9,#f9b4c4);
-    border:none; border-radius:50px; padding:12px 30px;
-    font-family:'Nunito',sans-serif; font-size:1rem; font-weight:800;
-    color:white; cursor:pointer;
-    box-shadow:0 4px 18px rgba(180,80,160,0.32);
-    transition:all 0.25s; margin-bottom:18px; width:100%; max-width:260px;
-    -webkit-appearance: none;
-  }
-  .dress-btn:hover{transform:scale(1.05); box-shadow:0 6px 24px rgba(180,80,160,0.45);}
-  .dress-btn:active{transform:scale(0.96);}
+/* ─── TIMER ─── */
+.timer-ring-wrap { display:flex; justify-content:center; margin-bottom:10px; }
+.timer-ring { position:relative; width:80px; height:80px; }
+.timer-ring svg { transform:rotate(-90deg); }
+.timer-ring circle { fill:none; stroke-width:7; }
+.timer-bg  { stroke:#f0e0f5; }
+.timer-arc { stroke:var(--purple); stroke-linecap:round;
+             transition:stroke-dashoffset .9s linear, stroke .3s; }
+.timer-text {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'Pacifico',cursive; font-size:1.4rem; color:var(--dark);
+}
 
-  /* Message box */
-  .message {
-    background:linear-gradient(135deg,rgba(168,216,234,0.25),rgba(184,179,233,0.25));
-    border-radius:18px; padding:16px 18px; border:2px dashed #f9b4c4;
-    animation:fadeSlide 1s 0.4s both;
-  }
-  @keyframes fadeSlide{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-  .message p { font-size:0.92rem; color:#6a5a8e; line-height:1.75; font-weight:600; }
-  .message p strong { color:#c0456a; font-size:1rem; }
-  .stars {
-    display:flex; justify-content:center; gap:6px; margin-top:10px; font-size:1.1rem;
-    animation:starPulse 1.6s ease-in-out infinite;
-  }
-  @keyframes starPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+/* ─── GAME 1 BEARS GRID ─── */
+.bears-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+  margin-bottom:12px;
+}
+.bear-option {
+  display:flex; flex-direction:column; align-items:center;
+  background:white; border-radius:18px; padding:8px 4px 6px;
+  cursor:pointer; border:3px solid transparent;
+  box-shadow:0 3px 12px rgba(160,80,140,.12);
+  transition:all .2s;
+  user-select:none;
+}
+.bear-option:hover, .bear-option:active { transform:scale(1.06); }
+.bear-option.correct  { border-color:#7ed6a0; background:#f0fff6; animation:correctPop .4s cubic-bezier(.34,1.56,.64,1); }
+.bear-option.wrong    { border-color:#ff8888; background:#fff0f0; animation:shake .4s ease; }
+.bear-option.disabled { pointer-events:none; opacity:.55; }
+@keyframes correctPop{ from{transform:scale(.8)} to{transform:scale(1)} }
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-  /* Confetti */
-  .confetti-piece {
-    position:fixed; width:10px; height:10px; border-radius:2px;
-    animation: confettiFall linear forwards;
-    pointer-events:none; z-index:999;
-  }
-  @keyframes confettiFall {
-    0%  {transform:translateY(-20px) rotate(0deg); opacity:1;}
-    100%{transform:translateY(110vh) rotate(720deg); opacity:0;}
-  }
+.bear-label { font-size:.72rem; font-weight:800; color:var(--dark); margin-top:4px; }
 
-  /* Music note floating on press */
-  .note-pop {
-    position:fixed; font-size:22px; pointer-events:none; z-index:998;
-    animation: noteFly 1.2s ease-out forwards;
-  }
-  @keyframes noteFly {
-    0%{transform:translateY(0) scale(1); opacity:1;}
-    100%{transform:translateY(-80px) scale(1.4); opacity:0;}
-  }
+/* instruction */
+.instruction {
+  text-align:center; padding:10px 14px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(168,216,234,.3),rgba(184,179,233,.3));
+  border:2px dashed var(--pink); font-size:.85rem; color:#6a5a8e; font-weight:700;
+  margin-bottom:12px;
+}
+.instruction span { color:#c0456a; font-size:.95rem; }
+
+/* btn */
+.btn {
+  width:100%; border:none; border-radius:50px; padding:12px;
+  font-family:'Nunito',sans-serif; font-size:1rem; font-weight:900;
+  color:white; cursor:pointer; transition:all .25s;
+  box-shadow:0 4px 16px rgba(180,80,160,.28);
+}
+.btn:active{transform:scale(.96);}
+.btn-pink   { background:linear-gradient(135deg,#f06292,#f9b4c4); }
+.btn-purple { background:linear-gradient(135deg,#9c82e0,#b8b3e9); }
+.btn-green  { background:linear-gradient(135deg,#5cb85c,#7ed6a0); }
+
+/* result flash */
+.result-msg {
+  text-align:center; padding:12px 14px; border-radius:16px; margin-bottom:12px;
+  font-size:.92rem; font-weight:800; display:none;
+}
+.result-msg.win  { background:#efffef; border:2px solid #7ed6a0; color:#2a8a2a; display:block; }
+.result-msg.lose { background:#fff0f0; border:2px solid #ff8888; color:#aa2222; display:block; }
+
+/* ─── GAME 2 PUZZLE ─── */
+.puzzle-wrap {
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+}
+.puzzle-info { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:4px; }
+.pinfo-pill {
+  background:white; border-radius:50px; padding:5px 14px;
+  font-weight:800; font-size:.8rem; color:var(--dark);
+  box-shadow:0 2px 8px rgba(160,80,140,.12);
+}
+
+.puzzle-grid {
+  display:grid;
+  gap:3px;
+  background:#d0b8e8;
+  border-radius:14px;
+  padding:3px;
+  box-shadow:0 8px 28px rgba(160,80,140,.22);
+  touch-action:none;
+}
+.puzzle-cell {
+  width:100%; aspect-ratio:1;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.6rem;
+  cursor:pointer;
+  transition:transform .15s, box-shadow .15s;
+  user-select:none;
+  position:relative;
+  font-weight:900;
+}
+.puzzle-cell.filled {
+  background:white;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+.puzzle-cell.filled:active { transform:scale(.93); }
+.puzzle-cell.empty {
+  background:#e8d0f8;
+  cursor:default;
+}
+.puzzle-cell.correct-pos { background:linear-gradient(135deg,#f0fff6,#d8f8e0); }
+.piece-label {
+  position:absolute; bottom:2px; right:3px;
+  font-size:.52rem; font-weight:900; color:#c0a0d8; opacity:.7;
+}
+
+.puzzle-solved {
+  display:none; text-align:center; padding:16px;
+  background:linear-gradient(135deg,#f0fff6,#f5eeff);
+  border:2px solid #7ed6a0; border-radius:18px;
+}
+.puzzle-solved.show { display:block; animation:popIn .5s cubic-bezier(.34,1.56,.64,1); }
+.puzzle-solved h3 { font-family:'Pacifico',cursive; color:#2a8a2a; font-size:1.2rem; margin-bottom:6px; }
+.puzzle-solved p  { font-size:.88rem; color:#6a5a8e; font-weight:700; }
+
+/* confetti */
+.confetti-piece {
+  position:fixed; border-radius:2px;
+  animation:cfall linear forwards; pointer-events:none; z-index:9999;
+}
+@keyframes cfall{
+  0%  {transform:translateY(-20px) rotate(0deg);   opacity:1;}
+  100%{transform:translateY(110vh) rotate(720deg); opacity:0;}
+}
+
+/* ─── WIN OVERLAY ─── */
+.win-overlay {
+  display:none; position:fixed; inset:0; z-index:9000;
+  background:rgba(60,20,80,.6); backdrop-filter:blur(3px);
+  align-items:center; justify-content:center;
+}
+.win-overlay.show { display:flex; }
+.win-modal {
+  background:var(--card); border-radius:28px; padding:30px 24px;
+  text-align:center; max-width:320px; width:90%;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1);
+}
+.win-modal h2 { font-family:'Pacifico',cursive; font-size:1.5rem; color:#c0456a; margin-bottom:8px; }
+.win-modal p  { font-size:.9rem; color:#6a5a8e; font-weight:700; line-height:1.7; }
+.win-modal .star-row { font-size:1.8rem; margin:12px 0; }
 </style>
 </head>
 <body>
 
-<!-- Floating hearts in background -->
-<div class="hearts-bg" id="heartsContainer"></div>
+<div class="hbg" id="hbg"></div>
 
 <div class="page">
-  <div class="card">
-    <div class="sparkle">✨</div>
-    <div class="sparkle">💫</div>
-    <div class="sparkle">🌸</div>
-    <div class="sparkle">⭐</div>
 
-    <div id="soundHint" style="background:#fff0fa;border:1.5px dashed #f9b4c4;border-radius:12px;padding:7px 12px;font-size:0.78rem;color:#b05090;font-weight:700;margin-bottom:10px;cursor:pointer;animation:starPulse 1.5s ease-in-out infinite;" onclick="unlockAndHide()">
-      🔊 Tap here first to enable sound! 📱
-    </div>
-    <div class="top-tag">💕 Special Card For You</div>
-    <div class="title">Hi Dolly! 🐻</div>
-    <div class="subtitle">💙 Blue &nbsp;·&nbsp; 💜 Purple &nbsp;·&nbsp; 💗 Pink</div>
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🐻 Dolly's Games! 🐻</h1>
+    <p>💙 Blue · 💜 Purple · 💗 Pink · Play & Win!</p>
+  </div>
 
-    <!-- Bear Scene -->
-    <div class="scene">
-      <div class="floor"></div>
-      <div class="teddy" id="teddy" onclick="changeDress()" title="Tap me!">
-        <svg class="bear-svg" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Ears -->
-          <circle cx="42" cy="46" r="21" fill="#c9956a"/>
-          <circle cx="118" cy="46" r="21" fill="#c9956a"/>
-          <circle cx="42" cy="46" r="12" fill="#e8b48a"/>
-          <circle cx="118" cy="46" r="12" fill="#e8b48a"/>
-          <!-- Body -->
-          <ellipse cx="80" cy="140" rx="48" ry="55" fill="#c9956a"/>
-          <!-- DRESS -->
-          <g id="dressGroup">
-            <ellipse cx="80" cy="158" rx="46" ry="40" fill="#4a90d9"/>
-            <ellipse cx="80" cy="150" rx="40" ry="18" fill="#6aaaee"/>
-            <ellipse cx="80" cy="195" rx="46" ry="9" fill="#2c6dbf" opacity="0.7"/>
-            <ellipse cx="80" cy="130" rx="16" ry="7" fill="#f9b4c4"/>
-            <ellipse cx="70" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(-30 70 128)"/>
-            <ellipse cx="90" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(30 90 128)"/>
-            <circle cx="80" cy="130" r="5" fill="#f06292"/>
-          </g>
-          <!-- Head -->
-          <circle cx="80" cy="74" r="42" fill="#c9956a"/>
-          <circle cx="80" cy="82" r="20" fill="#e8b48a"/>
-          <!-- Eyes -->
-          <circle cx="65" cy="65" r="7" fill="#2d1a0e"/>
-          <circle cx="95" cy="65" r="7" fill="#2d1a0e"/>
-          <circle cx="63" cy="63" r="2.5" fill="white"/>
-          <circle cx="93" cy="63" r="2.5" fill="white"/>
-          <!-- Nose -->
-          <ellipse cx="80" cy="80" rx="8" ry="5" fill="#2d1a0e"/>
-          <ellipse cx="80" cy="79" rx="4" ry="2" fill="#ff6b9d"/>
-          <!-- Smile -->
-          <path d="M 68 89 Q 80 101 92 89" stroke="#2d1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- Cheeks -->
-          <circle cx="54" cy="79" r="10" fill="#f9b4c4" opacity="0.5"/>
-          <circle cx="106" cy="79" r="10" fill="#f9b4c4" opacity="0.5"/>
-          <!-- Arms -->
-          <ellipse cx="28" cy="128" rx="14" ry="29" fill="#c9956a" transform="rotate(18 28 128)"/>
-          <ellipse cx="132" cy="128" rx="14" ry="29" fill="#c9956a" transform="rotate(-18 132 128)"/>
-          <circle cx="22" cy="150" r="12" fill="#c9956a"/>
-          <circle cx="138" cy="150" r="12" fill="#c9956a"/>
-          <!-- Legs -->
-          <ellipse cx="60" cy="193" rx="15" ry="12" fill="#b8845a"/>
-          <ellipse cx="100" cy="193" rx="15" ry="12" fill="#b8845a"/>
+  <!-- Sound hint -->
+  <div id="soundHint" onclick="unlockAudio()">🔊 Tap here first to enable sound on phone! 📱</div>
+
+  <!-- Score bar -->
+  <div class="scorebar">
+    <div class="score-pill">⭐ Score: <span id="totalScore">0</span></div>
+    <div class="score-pill">🏆 Wins: <span id="totalWins">0</span></div>
+  </div>
+
+  <!-- ══════════════ GAME 1 ══════════════ -->
+  <div class="game-card">
+    <div class="game-title">🎮 Game 1: Dress Dolly!</div>
+    <div class="game-subtitle">Tap the correct dress color before time runs out!</div>
+
+    <!-- Timer ring -->
+    <div class="timer-ring-wrap">
+      <div class="timer-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle class="timer-bg"  cx="40" cy="40" r="34"/>
+          <circle class="timer-arc" id="timerArc" cx="40" cy="40" r="34"
+                  stroke-dasharray="213.6" stroke-dashoffset="0"/>
         </svg>
+        <div class="timer-text" id="timerText">15</div>
       </div>
     </div>
 
-    <div class="dress-label" id="dressLabel">👗 Wearing Blue Dress</div>
-
-    <!-- Win message box (hidden until pink chosen) -->
-    <div class="win-box" id="winBox">
-      <h3>🎉 You Win, Dolly! 🎉</h3>
-      <p>You are wearing the <strong style="color:#e0357a">Pink Dress</strong>! 💗<br>
-      The correct dress! You look absolutely beautiful~<br>
-      You always win my heart! 💕🐻</p>
+    <div class="instruction" id="g1Instruction">
+      Press <span>Start Game</span> to play! 🎀
     </div>
 
-    <button class="dress-btn" id="mainBtn" onclick="changeDress()">✨ Change Dress!</button>
-
-    <div class="message">
-      <p>Hey <strong>Dolly</strong>! 🐾<br>
-      You are the most precious bear in my world 🌟<br>
-      Tap Dolly bear or the button to try on new dresses!<br>
-      Find the <strong>Pink Dress</strong> to win a surprise! 💗🎀</p>
-      <div class="stars">💙 💜 🌸 💕 ⭐ 💗</div>
+    <div class="bears-grid" id="bearsGrid">
+      <!-- generated by JS -->
     </div>
+
+    <div class="result-msg" id="g1Result"></div>
+
+    <button class="btn btn-pink" id="g1Btn" onclick="startGame1()">🎮 Start Game 1!</button>
+  </div>
+
+  <!-- ══════════════ GAME 2 ══════════════ -->
+  <div class="game-card">
+    <div class="game-title">🧩 Game 2: Teddy Puzzle!</div>
+    <div class="game-subtitle">Slide pieces to complete 10 Dolly teddies! 🐻</div>
+
+    <div class="puzzle-info">
+      <div class="pinfo-pill">🧩 Moves: <span id="moveCount">0</span></div>
+      <div class="pinfo-pill">⏱️ Time: <span id="puzzleTime">0</span>s</div>
+      <div class="pinfo-pill">✅ Done: <span id="piecesCorrect">0</span>/10</div>
+    </div>
+
+    <div class="puzzle-wrap">
+      <div class="puzzle-grid" id="puzzleGrid"></div>
+      <div class="puzzle-solved" id="puzzleSolved">
+        <h3>🎉 Puzzle Complete!</h3>
+        <p>Amazing Dolly! You solved the teddy puzzle!<br>You are so smart & beautiful! 💗🐻</p>
+      </div>
+      <button class="btn btn-purple" onclick="initPuzzle()">🔀 Shuffle Puzzle</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Win overlay -->
+<div class="win-overlay" id="winOverlay" onclick="closeWin()">
+  <div class="win-modal" onclick="event.stopPropagation()">
+    <h2 id="winTitle">🎉 You Win!</h2>
+    <div class="star-row">⭐⭐⭐</div>
+    <p id="winMsg">Great job Dolly!</p>
+    <br>
+    <button class="btn btn-green" onclick="closeWin()">🎀 Play Again!</button>
   </div>
 </div>
 
 <script>
-// ── Web Audio sound engine ──────────────────────────────────────────
+// ══ AUDIO ══════════════════════════════════════════════════════
 let audioCtx = null;
-
-// Create & unlock AudioContext on very first user touch (mobile fix)
 function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  // Resume if suspended (iOS requirement)
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
+['touchstart','touchend','click'].forEach(e => document.addEventListener(e, () => initAudio(), {once:true}));
 
-// Unlock on first touch anywhere on page
-document.addEventListener('touchstart', () => { initAudio(); }, { once: true });
-document.addEventListener('touchend',   () => { initAudio(); }, { once: true });
-document.addEventListener('click',      () => { initAudio(); }, { once: true });
+function unlockAudio() {
+  initAudio();
+  playTone(440,'sine',.05,.01,0);
+  const h = document.getElementById('soundHint');
+  h.textContent = '✅ Sound enabled! Have fun! 🎵';
+  h.style.background='#e8ffe8'; h.style.color='#2a8a2a'; h.style.border='2px dashed #6ac96a';
+  h.style.animation='none';
+  setTimeout(()=>h.style.display='none', 1800);
+}
 
-function playTone(freq, type='sine', dur=0.18, vol=0.3, delay=0) {
+function playTone(freq, type, dur, vol, delay) {
   try {
     const ctx = initAudio();
-    // Extra safety: resume if suspended
-    const doPlay = () => {
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
+    const play = () => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
       o.connect(g); g.connect(ctx.destination);
       o.type = type; o.frequency.value = freq;
       const t = ctx.currentTime + delay;
       g.gain.setValueAtTime(vol, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-      o.start(t);
-      o.stop(t + dur + 0.05);
+      g.gain.exponentialRampToValueAtTime(.001, t + dur);
+      o.start(t); o.stop(t + dur + .05);
     };
-    if (ctx.state === 'suspended') {
-      ctx.resume().then(doPlay);
-    } else {
-      doPlay();
-    }
+    ctx.state === 'suspended' ? ctx.resume().then(play) : play();
   } catch(e){}
 }
 
-function playDressChange() {
-  // Playful ascending ding melody
-  const notes = [523, 659, 784, 1047];
-  notes.forEach((f, i) => playTone(f, 'sine', 0.15, 0.28, i*0.09));
+function playClick()   { playTone(660,'sine',.1,.22,0); playTone(880,'sine',.1,.15,.08); }
+function playWrong()   { playTone(220,'sawtooth',.2,.2,0); playTone(180,'sawtooth',.25,.15,.1); }
+function playWin()     {
+  [[523,.12],[659,.12],[784,.12],[1047,.22],[784,.1],[1047,.1],[1175,.35]].reduce((t,[f,d])=>{ playTone(f,'sine',d,.3,t); return t+d+.04; },0);
+  [[330,.12],[415,.12],[494,.12],[659,.22],[494,.1],[659,.1],[740,.35]].reduce((t,[f,d])=>{ playTone(f,'triangle',d,.15,t); return t+d+.04; },0);
+}
+function playTick()    { playTone(800,'square',.05,.08,0); }
+function playSlide()   { playTone(440,'sine',.08,.15,0); playTone(550,'sine',.06,.1,.07); }
+function playPuzzleWin(){ [[784,.15],[988,.15],[1175,.15],[1319,.3],[1175,.1],[1319,.1],[1568,.4]].reduce((t,[f,d])=>{ playTone(f,'sine',d,.3,t); return t+d+.04; },0); }
+
+// ══ SCORE ══════════════════════════════════════════════════════
+let totalScore = 0, totalWins = 0;
+function addScore(pts) {
+  totalScore += pts;
+  totalWins += 1;
+  document.getElementById('totalScore').textContent = totalScore;
+  document.getElementById('totalWins').textContent = totalWins;
 }
 
-function playWinMusic() {
-  // Victory fanfare
-  const melody = [
-    {f:523,d:0.12},{f:659,d:0.12},{f:784,d:0.12},{f:1047,d:0.22},
-    {f:784,d:0.1},{f:1047,d:0.1},{f:1175,d:0.35}
-  ];
-  let t = 0;
-  melody.forEach(n => { playTone(n.f,'sine',n.d,0.32,t); t+=n.d+0.04; });
-  const harmony = [
-    {f:330,d:0.12},{f:415,d:0.12},{f:494,d:0.12},{f:659,d:0.22},
-    {f:494,d:0.1},{f:659,d:0.1},{f:740,d:0.35}
-  ];
-  let t2=0;
-  harmony.forEach(n => { playTone(n.f,'triangle',n.d,0.16,t2); t2+=n.d+0.04; });
-}
-
-function playPinkTune() {
-  // "You found it!" chime
-  playTone(880,'sine',0.18,0.32,0);
-  playTone(1047,'sine',0.18,0.32,0.19);
-  playTone(1319,'sine',0.32,0.38,0.38);
-}
-
-// ── Dresses ──────────────────────────────────────────────────────────
-const dresses = [
-  {
-    id: 'pink',
-    label: '💗 Wearing Pink Dress ← Correct!',
-    note: '💗',
-    html: `<ellipse cx="80" cy="158" rx="46" ry="40" fill="#f9b4c4"/>
-           <ellipse cx="80" cy="150" rx="40" ry="18" fill="#ffd6e8"/>
-           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#e08aaa" opacity="0.7"/>
-           <path d="M34 155 Q50 185 80 192 Q110 185 126 155" fill="#ffd6e8" opacity="0.4"/>
-           <ellipse cx="80" cy="130" rx="16" ry="7" fill="#4a90d9"/>
-           <ellipse cx="70" cy="128" rx="12" ry="8" fill="#4a90d9" transform="rotate(-30 70 128)"/>
-           <ellipse cx="90" cy="128" rx="12" ry="8" fill="#4a90d9" transform="rotate(30 90 128)"/>
-           <circle cx="80" cy="130" r="5" fill="#2c6dbf"/>`
-  },
-  {
-    id: 'purple',
-    label: '💜 Wearing Purple Dress',
-    note: '💜',
-    html: `<ellipse cx="80" cy="158" rx="46" ry="40" fill="#b8b3e9"/>
-           <ellipse cx="80" cy="150" rx="40" ry="18" fill="#d0ccf7"/>
-           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#8a82cc" opacity="0.7"/>
-           <ellipse cx="80" cy="130" rx="16" ry="7" fill="#f9b4c4"/>
-           <ellipse cx="70" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(-30 70 128)"/>
-           <ellipse cx="90" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(30 90 128)"/>
-           <circle cx="80" cy="130" r="5" fill="#c47bc0"/>`
-  },
-  {
-    id: 'rainbow',
-    label: '✨ Rainbow Special Dress',
-    note: '🌈',
-    html: `<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
-             <stop offset="0%" stop-color="#4a90d9"/>
-             <stop offset="50%" stop-color="#b8b3e9"/>
-             <stop offset="100%" stop-color="#f9b4c4"/>
-           </linearGradient></defs>
-           <ellipse cx="80" cy="158" rx="46" ry="40" fill="url(#rg)"/>
-           <ellipse cx="80" cy="150" rx="40" ry="18" fill="white" opacity="0.25"/>
-           <text x="56" y="168" font-size="15">⭐💜🌸</text>
-           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#8a82cc" opacity="0.6"/>
-           <ellipse cx="80" cy="130" rx="16" ry="7" fill="gold"/>
-           <ellipse cx="70" cy="128" rx="12" ry="8" fill="gold" transform="rotate(-30 70 128)"/>
-           <ellipse cx="90" cy="128" rx="12" ry="8" fill="gold" transform="rotate(30 90 128)"/>
-           <circle cx="80" cy="130" r="5" fill="#e8a000"/>`
-  },
-  {
-    id: 'blue',
-    label: '💙 Wearing Blue Dress',
-    note: '💙',
-    html: `<ellipse cx="80" cy="158" rx="46" ry="40" fill="#4a90d9"/>
-           <ellipse cx="80" cy="150" rx="40" ry="18" fill="#6aaaee"/>
-           <ellipse cx="80" cy="195" rx="46" ry="9" fill="#2c6dbf" opacity="0.7"/>
-           <ellipse cx="80" cy="130" rx="16" ry="7" fill="#f9b4c4"/>
-           <ellipse cx="70" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(-30 70 128)"/>
-           <ellipse cx="90" cy="128" rx="12" ry="8" fill="#f9b4c4" transform="rotate(30 90 128)"/>
-           <circle cx="80" cy="130" r="5" fill="#f06292"/>`
+// ══ CONFETTI ══════════════════════════════════════════════════
+const CC = ['#f9b4c4','#b8b3e9','#4a90d9','#ffe66d','#f06292','#a8d8ea','#7ed6a0'];
+function launchConfetti(n=50) {
+  for(let i=0;i<n;i++) {
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.className='confetti-piece';
+      c.style.left=Math.random()*100+'vw';
+      c.style.top='-12px';
+      c.style.background=CC[Math.floor(Math.random()*CC.length)];
+      c.style.width=(8+Math.random()*10)+'px';
+      c.style.height=(8+Math.random()*10)+'px';
+      c.style.borderRadius=Math.random()>.5?'50%':'2px';
+      c.style.animationDuration=(1.8+Math.random()*1.5)+'s';
+      c.style.animationDelay=(Math.random()*.3)+'s';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),3500);
+    },i*22);
   }
+}
+
+function showWinOverlay(title, msg) {
+  document.getElementById('winTitle').textContent = title;
+  document.getElementById('winMsg').textContent = msg;
+  document.getElementById('winOverlay').classList.add('show');
+  launchConfetti(70);
+  playWin();
+}
+function closeWin() { document.getElementById('winOverlay').classList.remove('show'); }
+
+// ══════════════════════════════════════════════════════════════
+//  GAME 1  –  Dress Dolly Timer Game
+// ══════════════════════════════════════════════════════════════
+const DRESSES = [
+  { id:'pink',   label:'💗 Pink',   color:'#f9b4c4', bowColor:'#4a90d9' },
+  { id:'blue',   label:'💙 Blue',   color:'#4a90d9', bowColor:'#f9b4c4' },
+  { id:'purple', label:'💜 Purple', color:'#b8b3e9', bowColor:'#f9b4c4' },
+  { id:'yellow', label:'💛 Yellow', color:'#ffe66d', bowColor:'#f9b4c4' },
+  { id:'green',  label:'💚 Green',  color:'#7ed6a0', bowColor:'#f9b4c4' },
+  { id:'orange', label:'🧡 Orange', color:'#ffb347', bowColor:'#4a90d9' },
 ];
 
-let cur = 0; // starts on blue (index 3, but we start at blue which is index 3 as default)
-// Actually blue is index 3, let's set initial so next press goes to pink
-let curIdx = 3; // currently showing blue (index 3 in array)
+let g1Timer=null, g1Time=15, g1Running=false, g1Target=null, g1Score=0, g1Round=0;
+const TOTAL_TIME = 15;
+const circumference = 2 * Math.PI * 34; // 213.6
 
-const dressGroup = document.getElementById('dressGroup');
-const dressLabel = document.getElementById('dressLabel');
-const winBox = document.getElementById('winBox');
-const teddy = document.getElementById('teddy');
+function makeBearSVG(dressColor, bowColor) {
+  return `<svg width="68" height="88" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="42" cy="46" r="21" fill="#c9956a"/>
+    <circle cx="118" cy="46" r="21" fill="#c9956a"/>
+    <circle cx="42" cy="46" r="12" fill="#e8b48a"/>
+    <circle cx="118" cy="46" r="12" fill="#e8b48a"/>
+    <ellipse cx="80" cy="140" rx="48" ry="55" fill="#c9956a"/>
+    <ellipse cx="80" cy="158" rx="46" ry="40" fill="${dressColor}"/>
+    <ellipse cx="80" cy="150" rx="40" ry="18" fill="${dressColor}" opacity=".7"/>
+    <ellipse cx="80" cy="195" rx="46" ry="9" fill="${dressColor}" opacity=".6"/>
+    <ellipse cx="80" cy="130" rx="16" ry="7" fill="${bowColor}"/>
+    <ellipse cx="70" cy="128" rx="12" ry="8" fill="${bowColor}" transform="rotate(-30 70 128)"/>
+    <ellipse cx="90" cy="128" rx="12" ry="8" fill="${bowColor}" transform="rotate(30 90 128)"/>
+    <circle cx="80" cy="130" r="5" fill="${bowColor}" opacity=".7"/>
+    <circle cx="80" cy="74" r="42" fill="#c9956a"/>
+    <circle cx="80" cy="82" r="20" fill="#e8b48a"/>
+    <circle cx="65" cy="65" r="7" fill="#2d1a0e"/>
+    <circle cx="95" cy="65" r="7" fill="#2d1a0e"/>
+    <circle cx="63" cy="63" r="2.5" fill="white"/>
+    <circle cx="93" cy="63" r="2.5" fill="white"/>
+    <ellipse cx="80" cy="80" rx="8" ry="5" fill="#2d1a0e"/>
+    <ellipse cx="80" cy="79" rx="4" ry="2" fill="#ff6b9d"/>
+    <path d="M 68 89 Q 80 101 92 89" stroke="#2d1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <circle cx="54" cy="79" r="10" fill="#f9b4c4" opacity=".45"/>
+    <circle cx="106" cy="79" r="10" fill="#f9b4c4" opacity=".45"/>
+    <ellipse cx="28" cy="128" rx="14" ry="29" fill="#c9956a" transform="rotate(18 28 128)"/>
+    <ellipse cx="132" cy="128" rx="14" ry="29" fill="#c9956a" transform="rotate(-18 132 128)"/>
+    <circle cx="22" cy="150" r="12" fill="#c9956a"/>
+    <circle cx="138" cy="150" r="12" fill="#c9956a"/>
+    <ellipse cx="60" cy="193" rx="15" ry="12" fill="#b8845a"/>
+    <ellipse cx="100" cy="193" rx="15" ry="12" fill="#b8845a"/>
+  </svg>`;
+}
 
-function changeDress(fromBtn) {
-  curIdx = (curIdx + 1) % dresses.length;
-  const d = dresses[curIdx];
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
 
-  // Sound
-  if (d.id === 'pink') {
-    playPinkTune();
-    setTimeout(playWinMusic, 600);
+function startGame1() {
+  clearInterval(g1Timer);
+  g1Running = true; g1Round++;
+  g1Time = TOTAL_TIME;
+  document.getElementById('g1Result').className='result-msg';
+  document.getElementById('g1Btn').textContent = '⏳ Playing...';
+  document.getElementById('g1Btn').disabled = true;
+
+  // Pick target
+  const shuffled = shuffle(DRESSES);
+  g1Target = shuffled[0];
+  const options = shuffle(shuffled.slice(0,6)); // show all 6
+
+  // Instruction
+  document.getElementById('g1Instruction').innerHTML =
+    `Find the <span>${g1Target.label}</span> Dress! Tap the right Dolly! 🎯`;
+
+  // Build grid
+  const grid = document.getElementById('bearsGrid');
+  grid.innerHTML = '';
+  options.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'bear-option';
+    div.dataset.id = d.id;
+    div.innerHTML = makeBearSVG(d.color, d.bowColor) + `<div class="bear-label">${d.label}</div>`;
+    div.onclick = () => handleG1Pick(d.id, div);
+    grid.appendChild(div);
+  });
+
+  // Timer
+  updateTimerRing();
+  g1Timer = setInterval(() => {
+    g1Time--;
+    if (g1Time % 3 === 0 && g1Time > 0) playTick();
+    updateTimerRing();
+    if (g1Time <= 0) {
+      clearInterval(g1Timer);
+      endGame1(false, null);
+    }
+  }, 1000);
+}
+
+function updateTimerRing() {
+  const frac = g1Time / TOTAL_TIME;
+  const offset = circumference * (1 - frac);
+  const arc = document.getElementById('timerArc');
+  arc.style.strokeDashoffset = offset;
+  arc.style.stroke = g1Time > 8 ? '#b8b3e9' : g1Time > 4 ? '#ffe66d' : '#ff8888';
+  document.getElementById('timerText').textContent = g1Time;
+}
+
+function handleG1Pick(id, el) {
+  if (!g1Running) return;
+  clearInterval(g1Timer);
+  g1Running = false;
+  const won = id === g1Target.id;
+  el.classList.add(won ? 'correct' : 'wrong');
+  // disable all
+  document.querySelectorAll('.bear-option').forEach(b => b.classList.add('disabled'));
+  if (!won) {
+    // highlight correct
+    document.querySelectorAll('.bear-option').forEach(b => {
+      if (b.dataset.id === g1Target.id) b.classList.add('correct');
+    });
+  }
+  setTimeout(() => endGame1(won, el), 500);
+}
+
+function endGame1(won, el) {
+  g1Running = false;
+  const btn = document.getElementById('g1Btn');
+  const res = document.getElementById('g1Result');
+  if (won) {
+    const pts = Math.max(10, g1Time * 8);
+    addScore(pts);
+    res.className = 'result-msg win';
+    res.textContent = `🎉 Correct! +${pts} points! You found the ${g1Target.label} dress! 💗`;
+    playWin();
+    launchConfetti(45);
+    showWinOverlay('🎉 Correct Dolly!', `You found the ${g1Target.label} dress in time! +${pts} points! You are amazing! 🐻💕`);
   } else {
-    playDressChange();
+    playWrong();
+    res.className = 'result-msg lose';
+    res.textContent = `⏰ Time's up! The correct dress was ${g1Target.label}. Try again! 💪`;
+  }
+  btn.disabled = false;
+  btn.textContent = '🔄 Play Again!';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  GAME 2  –  10-Piece Sliding Puzzle
+// ══════════════════════════════════════════════════════════════
+// 10 bear emojis + 2 empty (4x3 grid = 12 cells, 10 filled, 2 empty)
+// Pieces are teddy bears with different dress colors
+const PIECES = [
+  {emoji:'🐻',label:'1',bg:'#f9b4c4'},
+  {emoji:'🐻',label:'2',bg:'#b8b3e9'},
+  {emoji:'🐻',label:'3',bg:'#4a90d9'},
+  {emoji:'🐻',label:'4',bg:'#ffe66d'},
+  {emoji:'🐻',label:'5',bg:'#7ed6a0'},
+  {emoji:'🐻',label:'6',bg:'#ffb347'},
+  {emoji:'🐻',label:'7',bg:'#f9b4c4'},
+  {emoji:'🐻',label:'8',bg:'#b8b3e9'},
+  {emoji:'🐻',label:'9',bg:'#4a90d9'},
+  {emoji:'🐻',label:'10',bg:'#ffe66d'},
+];
+// Grid: 4 cols x 3 rows = 12 cells. 10 pieces + 2 empty slots
+const COLS = 4, ROWS = 3, TOTAL = COLS * ROWS;
+// Solved order: pieces 0-9 fill positions 0-9, positions 10,11 are empty
+const SOLVED = [...Array(10).keys(), -1, -1]; // -1 = empty
+
+let puzzleState = []; // array of piece indices (-1 = empty)
+let moveCount2 = 0, puzzleTimer2 = null, puzzleTime2 = 0, puzzleSolved2 = false;
+
+function getCellSize() {
+  const maxW = Math.min(window.innerWidth - 48, 380 - 36);
+  return Math.floor((maxW - (COLS-1)*3 - 6) / COLS);
+}
+
+function initPuzzle() {
+  clearInterval(puzzleTimer2);
+  puzzleTime2 = 0; moveCount2 = 0; puzzleSolved2 = false;
+  document.getElementById('moveCount').textContent = 0;
+  document.getElementById('puzzleTime').textContent = 0;
+  document.getElementById('piecesCorrect').textContent = 0;
+  document.getElementById('puzzleSolved').classList.remove('show');
+
+  // Shuffle: start from solved, do random valid moves
+  puzzleState = [...SOLVED];
+  for(let i=0;i<200;i++) {
+    const empties = puzzleState.map((v,i)=>v===-1?i:-1).filter(v=>v!==-1);
+    const ei = empties[Math.floor(Math.random()*empties.length)];
+    const neighbors = getNeighbors(ei);
+    const filled = neighbors.filter(n=>puzzleState[n]!==-1);
+    if(filled.length>0){
+      const ni = filled[Math.floor(Math.random()*filled.length)];
+      [puzzleState[ei], puzzleState[ni]] = [puzzleState[ni], puzzleState[ei]];
+    }
   }
 
-  // Note popup
-  spawnNote(d.note);
+  renderPuzzle();
 
-  // Change dress visually
-  dressGroup.style.opacity = '0';
-  dressGroup.style.transition = 'opacity 0.2s';
-  setTimeout(() => {
-    dressGroup.innerHTML = d.html;
-    dressLabel.textContent = d.label;
-    dressGroup.style.opacity = '1';
-  }, 200);
-
-  // Win box
-  if (d.id === 'pink') {
-    setTimeout(() => {
-      winBox.classList.add('show');
-      winBox.scrollIntoView({behavior:'smooth', block:'center'});
-      launchConfetti();
-    }, 300);
-    teddy.classList.remove('celebrate');
-    void teddy.offsetWidth;
-    teddy.classList.add('celebrate');
-  } else {
-    winBox.classList.remove('show');
-  }
-
-  // Teddy bounce reset
-  teddy.style.animation = 'none';
-  void teddy.offsetWidth;
-  teddy.style.animation = '';
+  // Start timer
+  puzzleTimer2 = setInterval(()=>{
+    if(!puzzleSolved2){
+      puzzleTime2++;
+      document.getElementById('puzzleTime').textContent = puzzleTime2;
+    }
+  },1000);
 }
 
-// ── Confetti ──────────────────────────────────────────────────────────
-const confettiColors = ['#f9b4c4','#b8b3e9','#4a90d9','#ffe66d','#f06292','#a8d8ea'];
-function launchConfetti() {
-  for(let i=0; i<60; i++){
-    setTimeout(() => {
-      const c = document.createElement('div');
-      c.className='confetti-piece';
-      c.style.left = Math.random()*100+'vw';
-      c.style.top = '-12px';
-      c.style.background = confettiColors[Math.floor(Math.random()*confettiColors.length)];
-      c.style.width = (8+Math.random()*10)+'px';
-      c.style.height = (8+Math.random()*10)+'px';
-      c.style.borderRadius = Math.random()>0.5?'50%':'2px';
-      c.style.animationDuration = (1.8+Math.random()*1.5)+'s';
-      c.style.animationDelay = (Math.random()*0.4)+'s';
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(), 3500);
-    }, i*25);
-  }
+function getNeighbors(idx) {
+  const r = Math.floor(idx/COLS), c = idx%COLS;
+  const n = [];
+  if(r>0)      n.push(idx-COLS);
+  if(r<ROWS-1) n.push(idx+COLS);
+  if(c>0)      n.push(idx-1);
+  if(c<COLS-1) n.push(idx+1);
+  return n;
 }
 
-// ── Floating music notes on button press ────────────────────────────
-function spawnNote(emoji) {
-  const btn = document.getElementById('mainBtn');
-  const rect = btn.getBoundingClientRect();
-  const n = document.createElement('div');
-  n.className = 'note-pop';
-  n.textContent = emoji + ' 🎵';
-  n.style.left = (rect.left + rect.width/2 - 20)+'px';
-  n.style.top  = (rect.top - 10 + window.scrollY)+'px';
-  document.body.appendChild(n);
-  setTimeout(()=>n.remove(), 1300);
-}
+function renderPuzzle() {
+  const cs = getCellSize();
+  const grid = document.getElementById('puzzleGrid');
+  grid.style.gridTemplateColumns = `repeat(${COLS},${cs}px)`;
+  grid.style.gridTemplateRows    = `repeat(${ROWS},${cs}px)`;
+  grid.innerHTML = '';
 
-// ── Unlock sound hint ─────────────────────────────────────────────────
-function unlockAndHide() {
-  initAudio();
-  // Play a tiny silent tone to fully unlock
-  playTone(440, 'sine', 0.05, 0.01, 0);
-  const hint = document.getElementById('soundHint');
-  if (hint) {
-    hint.textContent = '✅ Sound enabled! Enjoy the music! 🎵';
-    hint.style.background = '#e8ffe8';
-    hint.style.color = '#2a8a2a';
-    hint.style.border = '1.5px dashed #6ac96a';
-    hint.style.animation = 'none';
-    setTimeout(() => { hint.style.display='none'; }, 1800);
+  let correctCount = 0;
+  puzzleState.forEach((pieceIdx, cellIdx) => {
+    const div = document.createElement('div');
+    const isCorrect = pieceIdx === SOLVED[cellIdx];
+    if(pieceIdx === -1) {
+      div.className = 'puzzle-cell empty';
+    } else {
+      const isInCorrectPos = (pieceIdx === cellIdx); // piece i belongs at position i
+      if(isInCorrectPos) correctCount++;
+      div.className = 'puzzle-cell filled' + (isInCorrectPos?' correct-pos':'');
+      div.style.background = isInCorrectPos
+        ? `linear-gradient(135deg,#f0fff6,#d8f8e0)`
+        : `linear-gradient(135deg,${PIECES[pieceIdx].bg}55,white)`;
+      div.style.fontSize = cs > 70 ? '1.8rem' : '1.3rem';
+      div.innerHTML = PIECES[pieceIdx].emoji +
+        `<span class="piece-label">${PIECES[pieceIdx].label}</span>`;
+      div.onclick = () => trySlide(cellIdx);
+    }
+    div.style.width  = cs+'px';
+    div.style.height = cs+'px';
+    grid.appendChild(div);
+  });
+
+  document.getElementById('piecesCorrect').textContent = correctCount;
+
+  // Check solved: all 10 pieces at positions 0-9
+  if(!puzzleSolved2) {
+    const solved = puzzleState.slice(0,10).every((v,i)=>v===i) &&
+                   puzzleState[10]===-1 && puzzleState[11]===-1;
+    if(solved) onPuzzleSolved();
   }
 }
 
-// ── Floating hearts background ────────────────────────────────────────
-const container = document.getElementById('heartsContainer');
-const emojis = ['💙','💜','💗','🌸','✨','💕','⭐','🎀','🫧'];
-for(let i=0;i<22;i++){
-  const h = document.createElement('div');
-  h.className='heart-float';
-  h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-  h.style.left = Math.random()*100+'%';
-  h.style.fontSize = (12+Math.random()*18)+'px';
-  h.style.animationDuration = (7+Math.random()*8)+'s';
-  h.style.animationDelay = (Math.random()*9)+'s';
-  container.appendChild(h);
+function trySlide(cellIdx) {
+  if(puzzleSolved2) return;
+  if(puzzleState[cellIdx]===-1) return; // clicked empty
+  const neighbors = getNeighbors(cellIdx);
+  const emptyN = neighbors.find(n=>puzzleState[n]===-1);
+  if(emptyN===undefined) return; // no adjacent empty
+  [puzzleState[cellIdx], puzzleState[emptyN]] = [puzzleState[emptyN], puzzleState[cellIdx]];
+  moveCount2++;
+  document.getElementById('moveCount').textContent = moveCount2;
+  playSlide();
+  renderPuzzle();
 }
+
+function onPuzzleSolved() {
+  puzzleSolved2 = true;
+  clearInterval(puzzleTimer2);
+  const pts = Math.max(20, 300 - moveCount2*2 - puzzleTime2);
+  addScore(pts);
+  document.getElementById('puzzleSolved').classList.add('show');
+  playPuzzleWin();
+  launchConfetti(80);
+  setTimeout(()=>{
+    showWinOverlay('🧩 Puzzle Solved!',
+      `Amazing! You solved the 10-teddy puzzle in ${moveCount2} moves & ${puzzleTime2}s!\n+${pts} points! You are so smart Dolly! 💗🐻`);
+  },600);
+}
+
+// ══ FLOATING HEARTS ══════════════════════════════════════════
+const HBG = document.getElementById('hbg');
+const EMJ = ['💙','💜','💗','🌸','✨','💕','⭐','🎀','🫧'];
+for(let i=0;i<24;i++){
+  const h=document.createElement('div'); h.className='hf';
+  h.textContent=EMJ[Math.floor(Math.random()*EMJ.length)];
+  h.style.left=Math.random()*100+'%';
+  h.style.fontSize=(11+Math.random()*18)+'px';
+  h.style.animationDuration=(6+Math.random()*9)+'s';
+  h.style.animationDelay=(Math.random()*9)+'s';
+  HBG.appendChild(h);
+}
+
+// ══ INIT ══════════════════════════════════════════════════════
+initPuzzle();
 </script>
 </body>
 </html>
